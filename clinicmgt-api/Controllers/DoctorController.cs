@@ -9,9 +9,9 @@ namespace clinicmgt_api.Controllers
     [ApiController]
     public class DoctorsController : ControllerBase
     {
-        private readonly DoctorService _doctorService;
+        private readonly IDoctorService _doctorService;
 
-        public DoctorsController(DoctorService cosmosDbService)
+        public DoctorsController(IDoctorService cosmosDbService)
         {
             _doctorService = cosmosDbService;
         }

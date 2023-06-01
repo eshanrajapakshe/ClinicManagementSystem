@@ -1,3 +1,4 @@
+using clinicmgt_api.Models.DTO;
 using clinicmgt_api.Services;
 using Microsoft.Azure.Cosmos;
 
@@ -10,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IDoctorService>(options =>
+builder.Services.AddScoped<IDoctorService>(options =>
 {
     string URL = builder.Configuration.GetSection("AzureCosmosDBSettings")
     .GetValue<string>("URL");
@@ -31,6 +32,7 @@ builder.Services.AddSingleton<IDoctorService>(options =>
 
     return new DoctorService(cosmosClient, dbName, containerName);
 });
+
 
 var app = builder.Build();
 

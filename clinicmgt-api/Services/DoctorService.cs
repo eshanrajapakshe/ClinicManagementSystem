@@ -41,6 +41,7 @@ namespace clinicmgt_api.Services
 
         public async Task<Doctor> AddDoctorAsync(Doctor doctor)
         {
+            doctor.Id = Guid.NewGuid().ToString();
             ItemResponse<Doctor> response = await _container.CreateItemAsync(doctor, new PartitionKey(doctor.Id));
             return response.Resource;
         }
