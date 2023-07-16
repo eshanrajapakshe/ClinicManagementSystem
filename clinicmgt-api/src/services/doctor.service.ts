@@ -1,14 +1,5 @@
 import { DoctorModel, IDoctor } from "../models/doctor.model.js";
 
-export const createDoctor = async (doctor: IDoctor): Promise<IDoctor> => {
-  try {
-    const newDoctor = await DoctorModel.create(doctor);
-    return newDoctor;
-  } catch (error) {
-    throw new Error("Failed to create doctor");
-  }
-};
-
 export const getDoctors = async (): Promise<IDoctor[]> => {
   try {
     const doctors = await DoctorModel.find();

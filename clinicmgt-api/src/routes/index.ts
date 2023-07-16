@@ -1,17 +1,12 @@
-import express, { Request, Response } from "express";
-import {
-  addDoctor,
-  deleteDoctor,
-  getAllDoctors,
-  getDoctorById,
-  updateDoctor,
-} from "../controllers/doctors.controller.js";
+import express from "express";
+import doctorsRouter from "./doctors.js";
+import patientsRouter from "./patients.js";
+import chatRouter from "./chat.js";
+
 const router = express.Router();
 
-router.get("/getAllDoctors", getAllDoctors);
-router.post("/createDoctor", addDoctor);
-router.get("/getDoctor/:id", getDoctorById);
-router.put("/updateDoctor/:id", updateDoctor);
-router.delete("/deleteDoctor/:id", deleteDoctor);
+router.use("/doctor", doctorsRouter);
+router.use("/patient", patientsRouter);
+router.use("/chat", chatRouter);
 
-export { router };
+export default router;

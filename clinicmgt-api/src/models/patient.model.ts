@@ -1,12 +1,13 @@
 import { Document, Schema, model } from "mongoose";
 
-interface IPatient extends Document {
+export interface IPatient extends Document {
   firstName: string;
   lastName: string;
   email: string;
   contactNumber: string;
   age: number;
   address: string;
+  password: string;
 }
 
 const PatientSchema = new Schema<IPatient>({
@@ -34,6 +35,11 @@ const PatientSchema = new Schema<IPatient>({
   address: {
     type: String,
     required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
   },
 });
 

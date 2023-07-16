@@ -8,6 +8,7 @@ export interface IDoctor extends Document {
   fieldOfSpeciality: string;
   hospital: string;
   university: string;
+  password: string;
 }
 
 const DoctorSchema = new Schema<IDoctor>({
@@ -39,6 +40,11 @@ const DoctorSchema = new Schema<IDoctor>({
   university: {
     type: String,
     required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
   },
 });
 

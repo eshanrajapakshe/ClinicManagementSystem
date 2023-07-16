@@ -1,6 +1,7 @@
-import express, { Request, Response } from "express";
-import { DoctorModel, IDoctor } from "../models/doctor.model.js";
+import { Request, Response } from "express";
+import { IDoctor } from "../models/doctor.model.js";
 import * as doctorService from "../services/doctor.service.js";
+import * as authService from "../services/auth.service.js";
 
 const getAllDoctors = async (req: Request, res: Response) => {
   try {
@@ -11,13 +12,25 @@ const getAllDoctors = async (req: Request, res: Response) => {
   }
 };
 
-const addDoctor = async (req: Request, res: Response) => {
+const registerDoctor = async (req: Request, res: Response) => {
   try {
     const doctor: IDoctor = req.body;
-    const newDoctor = await doctorService.createDoctor(doctor);
-    res.status(201).json(newDoctor);
+    const { doctor: newDoctor, token } = await authService.registerDoctor(
+      doctor
+    );
+    res.status(201).json({ doctor: newDoctor, token });
   } catch (error) {
-    res.status(500).json({ error: "Failed to create doctor" });
+    res.status(500).json({ error: `Failed to register doctor. ${error}` });
+  }
+};
+
+const loginDoctor = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const { doctor, token } = await authService.loginDoctor(email, password);
+    res.json({ doctor, token });
+  } catch (error) {
+    res.status(401).json({ error: "Invalid email or password" });
   }
 };
 
@@ -64,4 +77,11 @@ const deleteDoctor = async (req: Request, res: Response) => {
   }
 };
 
-export { getAllDoctors, addDoctor, getDoctorById, updateDoctor, deleteDoctor };
+export {
+  getAllDoctors,
+  registerDoctor,
+  loginDoctor,
+  getDoctorById,
+  updateDoctor,
+  deleteDoctor,
+};
