@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { DoctorModel, IDoctor } from "../models/doctor.model.js";
 import { PatientModel } from "../models/patient.model.js";
+import { UserRole } from "../enums/userRole.enum.js";
 
 const generateToken = (doctor) => {
   const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET, {
@@ -20,6 +21,7 @@ export const registerDoctor = async (doctor: IDoctor) => {
     const hashedPassword = await bcrypt.hash(doctor.password, 10);
 
     const newDoctor = await DoctorModel.create({
+      userType: UserRole.DOCTOR,
       ...doctor,
       password: hashedPassword,
     });
@@ -64,6 +66,7 @@ export const registerPatient = async (patient) => {
     const hashedPassword = await bcrypt.hash(patient.password, 10);
 
     const newPatient = await PatientModel.create({
+      userType: UserRole.PATIENT,
       ...patient,
       password: hashedPassword,
     });

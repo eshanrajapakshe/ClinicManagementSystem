@@ -1,6 +1,8 @@
 import { Document, Schema, model } from "mongoose";
+import { UserRole } from "../enums/userRole.enum.js";
 
 export interface IPatient extends Document {
+  userType: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -11,6 +13,12 @@ export interface IPatient extends Document {
 }
 
 const PatientSchema = new Schema<IPatient>({
+  userType: {
+    type: String,
+    enum: [UserRole.PATIENT],
+    required: true,
+    default: UserRole.PATIENT,
+  },
   firstName: {
     type: String,
     required: true,
